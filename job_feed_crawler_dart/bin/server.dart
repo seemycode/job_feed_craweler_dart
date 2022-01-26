@@ -4,6 +4,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
 import 'package:job_feed_crawler_dart/controller/remote_io_crawler.dart';
 
 Future<void> main() async {
@@ -38,9 +39,16 @@ Future<void> handleGet(HttpRequest request) async {
   final crawler = RemoteIOStrategy();
   final result = await crawler(
       siteUrl:
-          'file:///work/Code/job_feed_craweler_dart/job_feed_crawler_dart/lib/fixtures/remote_io_empty.html');
-  final res = request.response..write(result);
-  await res.close();
+          'file:///work/Code/job_feed_craweler_dart/job_feed_crawler_dart/lib/fixtures/remote_io_results.html');
+
+  await result.fold((l) {
+    //TODO: create exception handler
+    print(l.status);
+  }, (r) async {
+    final json = r.toJson();
+    final res = request.response..write(json);
+    await res.close();
+  });
 }
 
 // Future<void> handlePost(HttpRequest request) async {

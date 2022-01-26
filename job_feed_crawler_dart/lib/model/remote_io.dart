@@ -6,42 +6,45 @@
 import 'dart:convert';
 
 class RemoteIOModel {
+  final List<RemoteIOModelItem> data;
+
+  RemoteIOModel(this.data);
+
+  RemoteIOModel.empty() : data = [];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'data': data.map((x) => x.toMap()).toList(),
+    };
+  }
+
+  factory RemoteIOModel.fromMap(Map<String, dynamic> map) {
+    return RemoteIOModel(
+      List<RemoteIOModelItem>.from(
+          map['data']?.map((x) => RemoteIOModelItem.fromMap(x))),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory RemoteIOModel.fromJson(String source) =>
+      RemoteIOModel.fromMap(json.decode(source));
+}
+
+class RemoteIOModelItem {
   final String siteUrl;
   final String siteName;
   final String siteIcon;
   final String roleTitle;
   final String roleDescription;
 
-  RemoteIOModel.empty()
-      : siteUrl = '',
-        siteName = '',
-        siteIcon = '',
-        roleTitle = '',
-        roleDescription = '';
-
-  RemoteIOModel({
+  RemoteIOModelItem({
     required this.siteUrl,
     required this.siteName,
     required this.siteIcon,
     required this.roleTitle,
     required this.roleDescription,
   });
-
-  RemoteIOModel copyWith({
-    String? siteUrl,
-    String? siteName,
-    String? siteIcon,
-    String? roleTitle,
-    String? roleDescription,
-  }) {
-    return RemoteIOModel(
-      siteUrl: siteUrl ?? this.siteUrl,
-      siteName: siteName ?? this.siteName,
-      siteIcon: siteIcon ?? this.siteIcon,
-      roleTitle: roleTitle ?? this.roleTitle,
-      roleDescription: roleDescription ?? this.roleDescription,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -53,8 +56,8 @@ class RemoteIOModel {
     };
   }
 
-  factory RemoteIOModel.fromMap(Map<String, dynamic> map) {
-    return RemoteIOModel(
+  factory RemoteIOModelItem.fromMap(Map<String, dynamic> map) {
+    return RemoteIOModelItem(
       siteUrl: map['siteUrl'] ?? '',
       siteName: map['siteName'] ?? '',
       siteIcon: map['siteIcon'] ?? '',
@@ -65,32 +68,6 @@ class RemoteIOModel {
 
   String toJson() => json.encode(toMap());
 
-  factory RemoteIOModel.fromJson(String source) =>
-      RemoteIOModel.fromMap(json.decode(source));
-
-  @override
-  String toString() {
-    return 'RemoteIOModel(siteUrl: $siteUrl, siteName: $siteName, siteIcon: $siteIcon, roleTitle: $roleTitle, roleDescription: $roleDescription)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is RemoteIOModel &&
-        other.siteUrl == siteUrl &&
-        other.siteName == siteName &&
-        other.siteIcon == siteIcon &&
-        other.roleTitle == roleTitle &&
-        other.roleDescription == roleDescription;
-  }
-
-  @override
-  int get hashCode {
-    return siteUrl.hashCode ^
-        siteName.hashCode ^
-        siteIcon.hashCode ^
-        roleTitle.hashCode ^
-        roleDescription.hashCode;
-  }
+  factory RemoteIOModelItem.fromJson(String source) =>
+      RemoteIOModelItem.fromMap(json.decode(source));
 }

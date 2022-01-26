@@ -9,6 +9,7 @@ dependencies:
   puppeteer: ^2.5.0
   shelf: ^1.1.0
   test: ^1.17.12
+  dartz: 
 dev_dependencies:
   pedantic: ^1.10.0
   mockito: ^5.0.17
