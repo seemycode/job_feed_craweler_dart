@@ -1,0 +1,15 @@
+name: job_feed_crawler_dart
+description: A web server built using the shelf package.
+version: 1.0.0
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+dependencies:
+  args: ^2.0.0
+  equatable: 
+  puppeteer: ^2.5.0
+  shelf: ^1.1.0
+  test: ^1.17.12
+dev_dependencies:
+  pedantic: ^1.10.0
+  mockito: ^5.0.17
+  build_runner: ^2.1.2
